@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astronomy Picture of the Day</title>
+</head>
+<body>
+
+      <div>
+            <h1>Astronomy Picture of the Day</h1>
+            <div id="content">
+                  <p>Loading...</p>
+            </div>
+      </div>
+
+      <script>
+            const apiKey = "DEMO_KEY";
+
+            const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+
+            fetch(apiUrl)
+                  .then(response => response.json())
+                  .then(data => {
+                        const contentDiv = document.getElementById('content');
+
+           
+                        const imgElement = document.createElement('img');
+                        imgElement.src = data.url;
+                        imgElement.alt = data.title;
+
+                        const titleElement = document.createElement('div');
+                        titleElement.textContent = data.title;
+
+                        const explanationElement = document.createElement('div');
+                        explanationElement.textContent = data.explanation;
+
+                        
+                        contentDiv.innerHTML = '';
+                        contentDiv.appendChild(imgElement);
+                        contentDiv.appendChild(titleElement);
+                        contentDiv.appendChild(explanationElement);
+                  })
+                  .catch(error => {
+                        const contentDiv = document.getElementById('content');
+                        contentDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+                  });
+      </script>
+</body>
+</html>
